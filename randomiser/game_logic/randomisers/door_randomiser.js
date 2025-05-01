@@ -118,6 +118,10 @@ class DoorRandomiser extends BaseRandomiser {
             let validTargets = availableTargets;
             if (edge[2].special.includes('one-way')) {
                 validTargets = validTargets.filter((node) => this.#oneWayTargets.includes(node));
+            } else if (this.settings['overworld-shuffle'] > 0 && edge[2].special.includes('ship')) {
+                validTargets = validTargets.filter((node) => (edge[2].overworld.internal == (this.#graph.getNodeAttribute(node, 'location') != "Overworld") || edge[2].overworld.external == (this.#graph.getNodeAttribute(node, 'location') == "Overworld")) && this.#shipTargets.includes(node))
+            } else if (this.settings['overworld-shuffle'] > 0) {
+                validTargets = validTargets.filter((node) => (edge[2].overworld.internal == (this.#graph.getNodeAttribute(node, 'location') != "Overworld") || edge[2].overworld.external == (this.#graph.getNodeAttribute(node, 'location') == "Overworld")) && !this.#shipTargets.includes(node))
             } else if (edge[2].special.includes('ship')) {
                 validTargets = validTargets.filter((node) => this.#shipTargets.includes(node));
             } else {
@@ -178,7 +182,7 @@ class DoorRandomiser extends BaseRandomiser {
     }
 
     #unlinkEdges() {
-        let shuffleableEdges = this.#graph.filterEdges((_, attr) => attr.shuffle == true && !attr.special.includes('broken'));
+        let shuffleableEdges = this.#graph.filterEdges((_, attr) => attr.shuffle == true && !attr.special.includes('broken') && ((this.settings['overworld-shuffle'] > 0 && (attr.overworld.external || attr.overworld.internal)) || this.settings['overworld-shuffle'] == 0));
         shuffleableEdges.forEach((edge) => {
             let source = this.#graph.source(edge);
             let target = this.#graph.target(edge);
