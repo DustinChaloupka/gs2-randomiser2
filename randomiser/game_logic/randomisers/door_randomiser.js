@@ -159,21 +159,20 @@ class DoorRandomiser extends BaseRandomiser {
     applyToExits(exitData) {
         for (let i = 0; i < exitData.length; ++i) {
             let exit = exitData[i];
-            let edge = this.#graph.findEdge((edge, attr, source, target, sourceAttr, targetAttr, undirected) =>
-                attr.shuffle && attr.eventId == exit.eventId && source.split(":")[0] == exit.mapId)
-            if (edge) {
-                let destination = this.#graph.target(edge).split(':');
-                if (destination.length < 2) {
-                    console.error('[ERROR] A shuffled edge was connected to a non-entrance node: ', destination);
-                    continue;
-                }
+            let edge = this.#graph.findEdge((edge, attr, source, target, sourceAttr, targetAttr, undirected) => {
+                let targets = target.split(":")
+                return attr.shuffle && targets.length == 2 && targets[0] == exit.destMap && targets[1] == exit.destEntrance && source.split(":")[0] == exit.mapId
+            })
 
+            if (edge !== undefined) {
+                let eventId = this.#graph.getEdgeAttribute(edge, 'eventId')
                 exitData[i] = {
                     ...exitData[i],
                     vanillaDestMap: exitData[i].destMap, vanillaDestEntrance: exitData[i].destEntrance,
-                    destMap: Number(destination[0]), destEntrance: Number(destination[1])
+                    eventId: eventId
                 }
             }
+
         }
     }
 
