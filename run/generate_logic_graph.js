@@ -103,6 +103,18 @@ function loadLocation(name) {
             graph.addEdge(intNode, extNode, { shuffle, special: special.length > 0 ? special.split(';') : [], requirements: requirements[0] ?? [], overworld: { internal: name == "Overworld", external: extLocation == "Overworld" }, eventId: eventId !== undefined ? eventId : intNode.split(":")[1] });
         }
     });
+
+    if (json.attributes && json.attributes.conditions) {
+        Object.entries(json.attributes.conditions).forEach(([target, condition]) => {
+            graph.setAttribute(target, parseInt(condition, 16))
+        })
+    }
+
+    if (json.attributes && json.attributes.pairedConditions) {
+        Object.entries(json.attributes.pairedConditions).forEach(([pair, condition]) => {
+            graph.setAttribute(pair, parseInt(condition, 16))
+        })
+    }
 }
 
 console.log('[INFO] Generating logic graph...');

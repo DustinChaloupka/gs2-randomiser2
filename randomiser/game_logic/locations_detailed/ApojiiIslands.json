@@ -12,6 +12,10 @@
         "flags": ["apojii_stone"]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["154:1", "2:36", "Overworld", true, "", []]

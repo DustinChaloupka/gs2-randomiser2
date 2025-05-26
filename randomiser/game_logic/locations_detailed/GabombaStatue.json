@@ -21,6 +21,10 @@
         ]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["120:3", "111:4", "Kibombo", true, "", [ ["gabomba_cleared"] ]],

@@ -1,7 +1,7 @@
 {
     "nodes": {
         "entrances": [
-            "2:1", "2:2", "2:3", "2:4", "2:5", "2:6", "2:7", "2:9",
+            "2:1", "2:2", "2:3", "2:4", "2:5", "2:6", "2:7", "2:8", "2:9",
             "2:10", "2:11", "2:12", "2:13", "2:14", "2:15", "2:16", "2:17", "2:18", "2:19",
             "2:20", "2:21", "2:22", "2:23", "2:24", "2:25", "2:26", "2:27", "2:28", "2:29",
             "2:30", "2:31", "2:32", "2:33", "2:34", "2:35", "2:36", "2:37", "2:38", "2:39",
@@ -15,14 +15,21 @@
         "flags": []
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
+            ["2:2", "10:8", "Daila", true, "", []],
             ["2:2", "13:8", "Daila", true, "", []],
+            ["2:3", "10:9", "Daila", true, "", []],
             ["2:3", "13:9", "Daila", true, "", []],
             ["2:4", "21:1", "KandoreanTemple", true, "", []],
             ["2:5", "23:3", "SeaGodShrine", true, "", []],
             ["2:6", "34:1", "DehkanPlateau", true, "", []],
             ["2:7", "36:6", "DehkanPlateau", true, "", []],
+            ["2:8", "43:2", "EastIndraShore", false, "", []],
             ["2:9", "44:11", "Madra", true, "", []],
             ["2:10", "53:1", "MadraDrawbridge", true, "", []],
             ["2:11", "53:2", "MadraDrawbridge", true, "", []],
@@ -38,10 +45,11 @@
             ["2:21", "102:1", "GondowanCliffs", true, "", []],
             ["2:22", "102:2", "GondowanCliffs", true, "", []],
             ["2:23", "105:6", "Naribwe", true, "", []],
-            ["2:24", "105:7", "Naribwe", true, "", []],
+            ["2:24", "105:7", "Naribwe", false, "", []],
             ["2:25", "108:1", "KibomboMountains", true, "", []],
             ["2:26", "107:1", "KibomboMountains", true, "", []],
-            ["2:27", "110:1", "Kibombo", true, "", []],
+            ["2:27", "110:1", "Kibombo", true, "", [ ["gabomba_cleared"] ]],
+            ["2:27", "113:1", "Kibombo", true, "", []],
             ["2:28", "131:1", "WIndraIslet", true, "", []],
             ["2:29", "132:1", "ETundariaIslet", true, "", []],
             ["2:30", "133:1", "NOseniaIslet", true, "", []],
@@ -75,11 +83,11 @@
             ["2:58", "242:1", "ShamanVillage", true, "", []],
             ["2:59", "266:7", "Loho", true, "", []],
             ["2:60", "268:1", "NorthernReaches", true, "ship", []],
-            ["2:61", "268:2", "NorthernReaches", true, "ship", []],
+            ["2:61", "268:4", "NorthernReaches", true, "ship", []],
             ["2:62", "269:1", "Prox", true, "", []],
             ["2:63", "271:3", "Prox", true, "", []],
-            ["2:80", "133:1", "NOseniaIslet", false, "", []],
-            ["2:81", "133:1", "NOseniaIslet", false, "", []],
+            ["2:80", "133:2", "NOseniaIslet", false, "", []],
+            ["2:81", "133:4", "NOseniaIslet", false, "", []],
             ["2:82", "276:1", "OseniaCavern", true, "", []],
             ["2:83", "275:1", "IndraCavern", true, "", []],
             ["2:84", "279:1", "MarsLighthouse", true, "", []],
@@ -95,6 +103,7 @@
             ["2:2", "2:4", true, false, "", []],
             ["2:2", "2:5", true, false, "", []],
             ["2:2", "2:6", true, false, "", []],
+            ["2:7", "2:8", true, false, "", []],
             ["2:7", "2:9", true, false, "", []],
             ["2:7", "2:12", false, false, "", [ ["ship", "ship_wings", "Hover Jade"] ]],
             ["2:7", "2:22", true, false, "", []],
