@@ -1,6 +1,7 @@
 {
     "nodes": {
         "entrances": [
+            "10:8", "10:9",
             "11:1;dead-end", "11:2;dead-end", "11:3;dead-end", "11:4;dead-end", "11:5;dead-end", "11:6;dead-end",
             "12:1;dead-end",
             "13:1", "13:2", "13:3", "13:4", "13:5", "13:6", "13:7", "13:8", "13:9"
@@ -14,8 +15,17 @@
         "flags": []
     },
 
+    "attributes": {
+        "conditions": {
+            "10:8": "0x00000873",
+            "10:9": "0x00000873"
+        }
+    },
+
     "edges": {
         "external": [
+            ["10:8", "2:2", "Overworld", true, "", []],
+            ["10:9", "2:3", "Overworld", true, "", []],
             ["13:8", "2:2", "Overworld", true, "", []],
             ["13:9", "2:3", "Overworld", true, "", []]
         ],

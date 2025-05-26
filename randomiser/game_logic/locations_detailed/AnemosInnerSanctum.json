@@ -22,6 +22,10 @@
         ]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["303:99", "236:99", "Contigo", true, "teleport", [ ["Teleport Lapis"] ]],

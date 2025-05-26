@@ -103,6 +103,22 @@ class DoorRandomiser extends BaseRandomiser {
 
         this.#updateSeenNodes(seenNodes, '9:4');
 
+        // Do not shuffle Atteka Inlet until the function to set the PC as Felix on entering
+        // and as the ship on exiting is fixed
+        let attekaInletEdge = this.#openEdges.find((edge) => edge[0] == "2:52")
+        availableTargets = availableTargets.filter((target) => target != attekaInletEdge[0] && target != attekaInletEdge[1])
+        this.#relinkEdges(attekaInletEdge[0], attekaInletEdge[1], attekaInletEdge[2])
+        this.#updateSeenNodes(seenNodes, attekaInletEdge[0])
+        this.#updateSeenNodes(seenNodes, attekaInletEdge[1])
+
+        // Do not shuffle Northern Reaches north until a way to get the boat on the south
+        // side of Prox is added
+        let northernReachesEdge = this.#openEdges.find((edge) => edge[0] == "2:61")
+        availableTargets = availableTargets.filter((target) => target != northernReachesEdge[0] && target != northernReachesEdge[1])
+        this.#relinkEdges(northernReachesEdge[0], northernReachesEdge[1], northernReachesEdge[2])
+        this.#updateSeenNodes(seenNodes, northernReachesEdge[0])
+        this.#updateSeenNodes(seenNodes, northernReachesEdge[1])
+
         while (availableTargets.length > 0) {
             let candidateEdges = this.#openEdges.filter((edge) => seenNodes.includes(edge[0]));
 
@@ -144,6 +160,22 @@ class DoorRandomiser extends BaseRandomiser {
                 newTarget = targets[Math.floor(this.prng.random() * targets.length)];
             }
 
+            let newTargetEdge = this.#openEdges.find((e) => e[0] == newTarget)
+            let pairedTarget
+            if (newTargetEdge) {
+                pairedTarget = this.#openEdges.find((e) => e[0] != newTargetEdge[0] && e[1] == newTargetEdge[1])
+            } else {
+                newTargetEdge = this.#openEdges.find((e) => e[1] == newTarget)
+                console.log(newTarget)
+                pairedTarget = this.#openEdges.find((e) => e[0] == newTargetEdge[0] && e[1] != newTargetEdge[1])
+            }
+
+            let pairedEdge = this.#openEdges.find((e) => (e[0] == edge[1] && e[1] != edge[0]) || (e[0] != edge[0] && e[1] == edge[1]))
+            let duplicateSource
+            if (pairedEdge) {
+                duplicateSource = this.#openEdges.find((e) => e[0] == newTarget)
+            }
+
             this.#relinkEdges(edge[0], newTarget, edge[2]);
             availableTargets = availableTargets.filter((node) => (node != edge[0] && node != newTarget));
 
@@ -151,6 +183,40 @@ class DoorRandomiser extends BaseRandomiser {
 
             // TODO: Remove debug info once door rando is fully functional
             console.debug('[DEBUG] Linked nodes:', edge[0], '->', newTarget, `(${this.#openEdges.length}, ${candidateEdges.length}, ${availableTargets.length})`);
+
+            if (pairedTarget || pairedEdge) {
+                let sourceEdge
+                let targetEdge
+                let edgeAttrs
+                if (pairedTarget && newTargetEdge[0] == pairedTarget[0]) {
+                    sourceEdge = edge[0]
+                    targetEdge = pairedTarget[1]
+                    edgeAttrs = edge[2]
+                } else if (pairedTarget && newTargetEdge[1] == pairedTarget[1]) {
+                    sourceEdge = edge[0]
+                    targetEdge = pairedTarget[0]
+                    edgeAttrs = edge[2]
+                } else if (pairedEdge && edge[0] == pairedEdge[1]) {
+                    this.#openEdges.push(duplicateSource)
+                    sourceEdge = pairedEdge[1]
+                    targetEdge = newTarget
+                    edgeAttrs = pairedEdge[2]
+                } else if (pairedEdge && edge[1] == pairedEdge[1]) {
+                    this.#openEdges.push(duplicateSource)
+                    sourceEdge = pairedEdge[0]
+                    targetEdge = newTarget
+                    edgeAttrs = pairedEdge[2]
+                } else {
+                    console.log(`[ERROR] Found pairs but no matching edges: ${edge}, ${pairedTarget}, ${pairedEdge}`)
+                    continue
+                }
+
+                this.#relinkEdges(sourceEdge, targetEdge, edgeAttrs);
+                availableTargets = availableTargets.filter((node) => node != sourceEdge && node != targetEdge);
+                this.#updateSeenNodes(seenNodes, targetEdge);
+                this.#updateSeenNodes(seenNodes, sourceEdge);
+                console.debug(`[DEBUG] Linked nodes: ${sourceEdge} -> ${targetEdge} (${this.#openEdges.length}, ${candidateEdges.length}, ${availableTargets.length})`);
+            }
         }
 
         // TODO: Remove debug info once door rando is fully functional
@@ -161,24 +227,80 @@ class DoorRandomiser extends BaseRandomiser {
     }
 
     applyToExits(exitData) {
+        let newExitData = []
+        var addrs = {}
         for (let i = 0; i < exitData.length; ++i) {
             let exit = exitData[i];
-            let edge = this.#graph.findEdge((edge, attr, source, target, sourceAttr, targetAttr, undirected) =>
+            if (addrs[exit.mapId] === undefined) {
+                addrs[exit.mapId] = exit.addr
+            }
+
+            let edges = this.#graph.filterEdges((edge, attr, source, target, sourceAttr, targetAttr, undirected) =>
                 attr.shuffle && attr.eventId == exit.eventId && source.split(":")[0] == exit.mapId)
-            if (edge) {
-                let destination = this.#graph.target(edge).split(':');
-                if (destination.length < 2) {
-                    console.error('[ERROR] A shuffled edge was connected to a non-entrance node: ', destination);
-                    continue;
+
+            edges.sort((edgeA, edgeB) => {
+                let edgeACondition = this.#graph.getAttribute(`${exit.mapId}:${exit.eventId};${this.#graph.target(edgeA)}`)
+                if (edgeACondition === undefined) {
+                    edgeACondition = this.#graph.getAttribute(this.#graph.target(edgeA))
+                }
+                let edgeBCondition = this.#graph.getAttribute(`${exit.mapId}:${exit.eventId};${this.#graph.target(edgeB)}`)
+                if (edgeBCondition === undefined) {
+                    edgeBCondition = this.#graph.getAttribute(this.#graph.target(edgeB))
+                }
+                if (edgeACondition === undefined) {
+                    return 1
                 }
 
-                exitData[i] = {
-                    ...exitData[i],
-                    vanillaDestMap: exitData[i].destMap, vanillaDestEntrance: exitData[i].destEntrance,
+                if (edgeBCondition === undefined) {
+                    return -1
+                }
+
+                return edgeACondition - edgeBCondition
+            })
+
+            edges.forEach((edge) => {
+                let target = this.#graph.target(edge)
+                let destination = target.split(':');
+                if (destination.length < 2) {
+                    console.error('[ERROR] A shuffled edge was connected to a non-entrance node: ', destination);
+                    return;
+                }
+
+                let newExit = {
+                    ...exit, addr: addrs[exit.mapId], vanillaCondition: exit.condition,
+                    vanillaDestMap: exit.destMap, vanillaDestEntrance: exit.destEntrance,
                     destMap: Number(destination[0]), destEntrance: Number(destination[1])
                 }
+
+                let j = exitData.findIndex((e) => e.addr != exitData[i].addr && e.mapId == exit.mapId && e.eventId == exit.eventId)
+                if (j > i) {
+                    exit = exitData[j]
+                    exitData.splice(j, 1)
+                }
+
+                let condition = this.#graph.getAttribute(target)
+                let pairedCondition = this.#graph.getAttribute(`${exit.mapId}:${exit.eventId};${target}`)
+                if (pairedCondition) {
+                    newExit.condition = pairedCondition
+                    addrs[newExit.mapId] += 4
+                } else if (condition) {
+                    newExit.condition = condition
+                    addrs[newExit.mapId] += 4
+                } else if (newExit.condition) {
+                    delete newExit.condition
+                }
+
+                newExitData.push(newExit)
+
+                addrs[newExit.mapId] += 4
+            })
+
+            if (edges.length == 0) {
+                addrs[exit.mapId] += 4
             }
         }
+
+        return newExitData
     }
 
     #unlinkEdges() {
@@ -386,7 +508,7 @@ class DoorRandomiser extends BaseRandomiser {
         this.#graph.addEdge('237:4', '0xD03', { shuffle: false, special: [], requirements: ['reunion'] });
         this.#graph.addEdge('9:4', '0xD05', { shuffle: false, special: [], requirements: [] });
         this.#graph.addEdge('9:4', '0xD06', { shuffle: false, special: [], requirements: [] });
-        this.#graph.addEdge('111:5', '0xD07', { shuffle: false, special: [], requirements: ['piers'] });
+        this.#graph.addEdge('114:5', '0xD07', { shuffle: false, special: [], requirements: ['piers'] });
 
         // Moving starting inventories to Overworld and setting their character requirement
         this.#graph.dropEdge('9:4', '0x2');
@@ -395,8 +517,8 @@ class DoorRandomiser extends BaseRandomiser {
         this.#graph.dropEdge('237:4', '0x102');
         this.#graph.dropEdge('237:4', '0x103');
         this.#graph.dropEdge('237:4', '0x104');
-        this.#graph.dropEdge('111:5', '0x105');
-        this.#graph.dropEdge('111:5', '0x106');
+        this.#graph.dropEdge('114:5', '0x105');
+        this.#graph.dropEdge('114:5', '0x106');
         this.#graph.addEdge('2:1', '0x2', { shuffle: false, special: [], requirements: ['Sheba'] });
         this.#graph.addEdge('2:1', '0x3', { shuffle: false, special: [], requirements: ['Sheba'] });
         this.#graph.addEdge('2:1', '0x101', { shuffle: false, special: [], requirements: ['Mia'] });

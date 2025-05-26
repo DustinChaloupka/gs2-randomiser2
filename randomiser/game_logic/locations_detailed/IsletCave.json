@@ -11,6 +11,10 @@
         "flags": ["boss_sentinel"]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["136:1", "135:5", "SeaOfTimeIslet", true, "", []]
