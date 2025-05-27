@@ -224,6 +224,12 @@ class DoorRandomiser extends BaseRandomiser {
         if (this.#openEdges.length > 0 && this.#openEdges.length < 50) console.log(this.#openEdges);
         console.log('[INFO] >> available targets left:', availableTargets.length);
         if (availableTargets.length > 0 && availableTargets.length < 50) console.log(availableTargets);
+
+        // Aqua Rock opening hack. Not sure why the flag is not set after the event when it is listed at the
+        // end of the exit table, but works in some other orderings.
+        this.#graph.addNode("154:77", {})
+        this.#graph.addNode("158:5", {})
+        this.#graph.addEdge("154:77", "158:5", { shuffle: true, eventId: 77 })
     }
 
     applyToExits(exitData) {
