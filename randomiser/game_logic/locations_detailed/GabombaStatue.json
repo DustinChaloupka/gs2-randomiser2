@@ -22,13 +22,18 @@
     },
 
     "attributes": {
-        "conditions": {}
+        "conditions": {},
+        "pairedConditions": {
+            "123:1;114:3": "0xFFFFFFFF",
+            "123:1;111:3": "0x86B"
+        }
     },
 
     "edges": {
         "external": [
             ["120:3", "111:4", "Kibombo", true, "", [ ["gabomba_cleared"] ]],
-            ["123:1", "111:3", "Kibombo", true, "ladder;conditional", []],
+            ["123:1", "111:3", "Kibombo", true, "ladder", []],
+            ["123:1", "114:3", "Kibombo", true, "ladder", []],
             ["124:2", "126:1", "GabombaCatacombs", true, "ladder", [ ["gabomba_cleared"] ]]
         ],
 
