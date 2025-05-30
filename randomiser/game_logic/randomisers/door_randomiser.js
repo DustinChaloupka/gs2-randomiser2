@@ -162,8 +162,9 @@ class DoorRandomiser extends BaseRandomiser {
                 pairedTarget = this.#openEdges.find((e) => e[0] != newTargetEdge[0] && e[1] == newTargetEdge[1])
             } else {
                 newTargetEdge = this.#openEdges.find((e) => e[1] == newTarget)
-                console.log(newTarget)
-                pairedTarget = this.#openEdges.find((e) => e[0] == newTargetEdge[0] && e[1] != newTargetEdge[1])
+                if (newTargetEdge) {
+                    pairedTarget = this.#openEdges.find((e) => e[0] == newTargetEdge[0] && e[1] != newTargetEdge[1])
+                }
             }
 
             let pairedEdge = this.#openEdges.find((e) => (e[0] == edge[1] && e[1] != edge[0]) || (e[0] != edge[0] && e[1] == edge[1]))
