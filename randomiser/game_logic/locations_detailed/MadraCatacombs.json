@@ -12,6 +12,10 @@
         "flags": ["ruin_key_dropped"]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["48:1", "44:15", "Madra", true, "", []],

@@ -18,6 +18,10 @@
         ]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["95:8", "101:8", "AlhafranCave", true, "", []],

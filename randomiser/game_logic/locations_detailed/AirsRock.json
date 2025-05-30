@@ -29,6 +29,16 @@
         ]
     },
 
+    "attributes": {
+        "conditions": {},
+        "pairedConditions": {
+            "84:6;84:8": "0xFFFFFFFF",
+            "84:10;84:8": "0x87A",
+            "84:7;84:9": "0xFFFFFFFF",
+            "84:11;84:9": "0x87A"
+        }
+    },
+
     "edges": {
         "external": [
             ["82:1", "2:16", "Overworld", true, "", []]
@@ -77,7 +87,9 @@
             ["84:6", "84:8", true, true, "ladder", []],
             ["84:7", "84:9", true, true, "ladder", []],
             ["84:10", "84:12", false, true, "ladder", [ ["84_fog"] ]],
+            ["84:10", "84:8", false, true, "ladder", []],
             ["84:11", "84:13", false, true, "ladder", [ ["84_fog"] ]],
+            ["84:11", "84:9", false, true, "ladder", []],
             ["84:12", "84:10", false, true, "ladder", []],
             ["84:13", "84:11", false, true, "ladder", []],
             ["84:14", "86:1", true, true, "", []],

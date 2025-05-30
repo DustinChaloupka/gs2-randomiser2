@@ -1,0 +1,27 @@
+{
+    "nodes": {
+        "entrances": [
+            "43:1", "43:2"
+        ],
+
+        "treasure": [],
+        "djinn": [],
+        "flags": []
+    },
+
+    "attributes": {
+        "conditions": {
+            "43:1": "0x907"
+        }
+    },
+
+    "edges": {
+        "external": [
+            ["43:2", "2:8", "Overworld", false, "", []],
+            ["43:1", "40:1", "LemurianShip", true, "", []]
+        ],
+
+        "internal": [
+        ]
+    }
+}

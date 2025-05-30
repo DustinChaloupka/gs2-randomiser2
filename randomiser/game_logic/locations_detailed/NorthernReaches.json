@@ -1,6 +1,6 @@
 {
     "nodes": {
-        "entrances": ["268:1", "268:2"],
+        "entrances": ["268:1", "268:4"],
         "treasure": [],
         "djinn": [],
         "flags": []
@@ -9,11 +9,11 @@
     "edges": {
         "external": [
             ["268:1", "2:60", "Overworld", true, "ship", []],
-            ["268:2", "2:61", "Overworld", true, "ship", [ ["cannon"] ]]
+            ["268:4", "2:61", "Overworld", true, "ship", [ ["cannon"] ]]
         ],
 
         "internal": [
-            ["268:1", "268:2", true, false, "", []]
+            ["268:1", "268:4", true, false, "", []]
         ]
     }
 }

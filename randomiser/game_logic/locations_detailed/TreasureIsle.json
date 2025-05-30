@@ -15,6 +15,10 @@
         "flags": ["boss_starmagician"]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["298:1", "2:87", "Overworld", true, "", []]

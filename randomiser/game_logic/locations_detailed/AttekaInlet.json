@@ -10,11 +10,16 @@
         "flags": []
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["234:1", "2:52", "Overworld", true, "ship", [], "4"],
             ["234:4", "40:1", "LemurianShip", true, "", [], "1"],
-            ["235:2", "2:53", "Overworld", true, "", []]
+            ["235:2", "2:53", "Overworld", true, "", []],
+            ["235:6", "2:53", "Overworld", true, "", []]
         ],
 
         "internal": [

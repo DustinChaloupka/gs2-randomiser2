@@ -6,6 +6,10 @@
         "flags": []
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["132:1", "2:29", "Overworld", true, "", []]
