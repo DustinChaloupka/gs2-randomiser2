@@ -6,7 +6,7 @@
 
         "treasure": [],
         "djinn": [],
-        "flags": []
+        "flags": ["enter_indra_ship"]
     },
 
     "attributes": {
@@ -22,6 +22,7 @@
         ],
 
         "internal": [
+            ["43:1", "enter_indra_ship", false, false, "", []]
         ]
     }
 }

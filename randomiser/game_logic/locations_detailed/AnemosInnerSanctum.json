@@ -18,7 +18,7 @@
         "djinn": [],
 
         "flags": [
-            "boss_dullahan", "305_pillar1", "305_pillar2", "305_solved"
+            "boss_dullahan", "305_pillar1", "305_pillar2", "305_solved", "anemos_open"
         ]
     },
 
@@ -38,7 +38,8 @@
             ["303:1", "0xE04", false, false, "", []],
             ["303:2", "303:99", true, false, "", []],
             ["303:1", "308:2", true, true, "", []],
-            ["303:2", "307:10", false, true, "", [ ["djinn:72"] ]],
+            ["303:2", "anemos_open", false, false, "", [ ["djinn:72"] ]],
+            ["303:2", "307:10", false, true, "", [ ["anemos_open"] ]],
 
             ["304:1", "304:3", true, false, "", []],
             ["304:3", "304:2", true, false, "", []],

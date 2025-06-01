@@ -10,7 +10,7 @@
         ],
         "treasure": ["0x90B", "0xF67", "0xFB9", "0xFBA", "0xFBB", "0xFBC", "0xFBD", "0xFBF"],
         "djinn": ["0x51"],
-        "flags": []
+        "flags": ["enter_lemuria_ship"]
     },
 
     "attributes": {
@@ -33,6 +33,7 @@
             ["199:3", "200:1", true, false, "ship", []],
             ["199:5", "200:1", true, false, "ship", []],
 
+            ["200:1", "enter_lemuria_ship", false, false, "", []],
             ["200:1", "200:2", true, false, "", []],
             ["200:1", "200:3", true, false, "", []],
             ["200:2", "201:5", true, true, "", [], "2"],
