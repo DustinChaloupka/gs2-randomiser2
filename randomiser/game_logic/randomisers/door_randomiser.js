@@ -436,6 +436,7 @@ class DoorRandomiser extends BaseRandomiser {
         var set = [];
         if (this.settings['ship'] == 2) set.push('ship');
         if (this.settings['ship-wings']) set.push('ship_wings');
+        if (this.setting['anemos-access'] == 2) set.push('anemos_open')
 
         return set;
     }

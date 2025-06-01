@@ -7,7 +7,7 @@
         ],
         "treasure": ["0xFC4"],
         "djinn": ["0x3F"],
-        "flags": []
+        "flags": ["enter_atteka_ship"]
     },
 
     "attributes": {
@@ -23,6 +23,7 @@
         ],
 
         "internal": [
+            ["234:1", "enter_atteka_ship", false, false, "", []],
             ["234:1", "234:2", true, false, "", []],
             ["234:1", "234:4", true, false, "", []],
             ["234:3", "0xFC4", false, false, "", []],

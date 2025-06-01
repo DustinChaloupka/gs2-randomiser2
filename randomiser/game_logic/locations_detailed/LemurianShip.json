@@ -27,9 +27,9 @@
 
     "edges": {
         "external": [
-            ["40:1", "234:4", "AttekaInlet", true, "", []],
-            ["40:1", "200:3", "Lemuria", true, "", []],
-            ["40:1", "43:1", "EastIndraShore", true, "", []]
+            ["40:1", "234:4", "AttekaInlet", true, "", [ ["enter_atteka_ship"] ]],
+            ["40:1", "200:3", "Lemuria", true, "", [ ["enter_lemuria_ship"] ]],
+            ["40:1", "43:1", "EastIndraShore", true, "", [ ["enter_indra_ship"] ]]
         ],
 
         "internal": [
