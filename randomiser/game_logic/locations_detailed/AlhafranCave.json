@@ -13,6 +13,10 @@
         "flags": []
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["100:1", "95:12", "Alhafra", true, "", []],

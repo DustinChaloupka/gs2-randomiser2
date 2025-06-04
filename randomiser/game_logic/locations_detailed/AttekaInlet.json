@@ -7,17 +7,23 @@
         ],
         "treasure": ["0xFC4"],
         "djinn": ["0x3F"],
-        "flags": []
+        "flags": ["enter_atteka_ship"]
+    },
+
+    "attributes": {
+        "conditions": {}
     },
 
     "edges": {
         "external": [
             ["234:1", "2:52", "Overworld", true, "ship", [], "4"],
             ["234:4", "40:1", "LemurianShip", true, "", [], "1"],
-            ["235:2", "2:53", "Overworld", true, "", []]
+            ["235:2", "2:53", "Overworld", true, "", []],
+            ["235:6", "2:53", "Overworld", true, "", []]
         ],
 
         "internal": [
+            ["234:1", "enter_atteka_ship", false, false, "", []],
             ["234:1", "234:2", true, false, "", []],
             ["234:1", "234:4", true, false, "", []],
             ["234:3", "0xFC4", false, false, "", []],

@@ -285,8 +285,8 @@ function randomise(seed, rawSettings, spoilerFilePath, callback) {
 
         randomiser = new DoorRandomiser(prng, settings);
         randomiser.shuffleDoors();
-        randomiser.applyToExits(doorClone);
-        doorData.writeToMapCode(doorClone, gameData.mapCode);
+        var newDoors = randomiser.applyToExits(doorClone);
+        doorData.writeToMapCode(newDoors, gameData.mapCode);
     } else {
         randomiser = new ItemRandomiser(prng, locationsClone, settings);
     }

@@ -4,7 +4,9 @@
             "110:1", "110:2", "110:3", "110:4", "110:5", "110:6", "110:7", "110:8", "110:10",
             "111:1", "111:3", "111:4", "111:5",
             "112:1", "112:2", "112:3;dead-end", "112:4;dead-end", "112:5;dead-end", "112:6", "112:7;dead-end", "112:8", 
-            "112:9;dead-end", "112:10", "112:11", "112:12", "112:13;dead-end", "112:14", "112:15", "112:16"
+            "112:9;dead-end", "112:10", "112:11", "112:12", "112:13;dead-end", "112:14", "112:15", "112:16",
+            "113:1", "113:10",
+            "114:3", "114:5"
         ],
 
         "treasure": ["0x105", "0x106", "0xF4E", "0xF4F", "0xF50"],
@@ -12,11 +14,26 @@
         "flags": ["piers"]
     },
 
+    "attributes": {
+        "conditions": {
+            "110:3": "0x86B",
+            "110:6": "0x86B",
+            "110:5": "0x86B",
+            "110:4": "0x86B",
+            "110:7": "0x86B",
+            "110:8": "0x86B",
+            "111:4": "0x86B",
+            "113:1": "0x8FF"
+        }
+    },
+
     "edges": {
         "external": [
-            ["110:1", "2:27", "Overworld", true, "", []],
+            ["110:1", "2:27", "Overworld", true, "", [ [ "gabomba_cleared"] ]],
+            ["113:1", "2:27", "Overworld", true, "", []],
             ["111:4", "120:3", "GabombaStatue", true, "", [ ["gabomba_cleared"] ]],
-            ["111:3", "123:1", "GabombaStatue", true, "ladder", [ ["Scoop Gem"] ]]
+            ["111:3", "123:1", "GabombaStatue", true, "ladder", [ ["gabomba_cleared", "Scoop Gem"] ]],
+            ["114:3", "123:1", "GabombaStatue", true, "ladder", [ ["Scoop Gem"] ]]
         ],
 
         "internal": [
@@ -27,7 +44,7 @@
             ["110:1", "110:6", true, false, "", []],
             ["110:1", "110:7", true, false, "", []],
             ["110:1", "110:8", true, false, "", []],
-            ["110:1", "110:10", false, false, "", [ ["Lash Pebble"] ]],
+            ["110:1", "110:10", false, false, "", []],
             ["110:10", "110:1", false, false, "", []],
             ["110:2", "111:1", true, true, "", []],
             ["110:3", "112:1", true, true, "", []],
@@ -54,12 +71,17 @@
             ["112:13", "112:16", true, true, "ladder", []],
             ["112:3", "0xF4F", false, false, "", []],
             ["112:13", "0xF50", false, false, "", []],
-
-            ["111:5", "0x105", false, false, "", [ ["piers"] ]],
-            ["111:5", "0x106", false, false, "", [ ["piers"] ]],
-            ["111:5", "0x4D", false, false, "", [ ["piers"] ]],
-            ["111:5", "0x4E", false, false, "", [ ["piers"] ]],
-            ["111:5", "piers", false, false, "", []]
+            
+            ["113:1", "113:10", false, false, "", [ ["Lash Pebble"] ]],
+            ["113:10", "113:1", false, false, "fall;one-way", []],
+            ["113:10", "114:5", true, true, "", []],
+            
+            ["114:5", "114:3", false, false, "", []],
+            ["114:5", "0x105", false, false, "", [ ["piers"] ]],
+            ["114:5", "0x106", false, false, "", [ ["piers"] ]],
+            ["114:5", "0x4D", false, false, "", [ ["piers"] ]],
+            ["114:5", "0x4E", false, false, "", [ ["piers"] ]],
+            ["114:5", "piers", false, false, "", []]
         ]
     }
 }

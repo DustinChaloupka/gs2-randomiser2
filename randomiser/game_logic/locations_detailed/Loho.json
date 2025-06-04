@@ -9,6 +9,10 @@
         "flags": ["cannon"]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["266:7", "2:59", "Overworld", true, "", []]
