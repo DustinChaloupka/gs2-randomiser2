@@ -100,23 +100,12 @@ function validateAgainstRom() {
     const { DoorRandomiser } = require('../randomiser/game_logic/randomisers/door_randomiser.js');
     randomiser = new DoorRandomiser(prng, {});
     var exitData = doors.clone()
-    randomiser.applyToExits(exitData);
+    var newExitData = randomiser.applyToExits(exitData);
 
     let badExits = [];
 
-    exitData.forEach((exit) => {
-        if (exit.vanillaDestMap == 10 || exit.vanillaDestMap == 139 || exit.vanillaDestMap == 247 || exit.vanillaDestMap == 200 || exit.mapId == 177 || (exit.mapId == 2 && exit.eventId == 27 && exit.vanillaDestMap == 113) || (exit.mapId == 112 && exit.vanillaDestMap == 113) || (exit.mapId == 120 && exit.vanillaDestMap == 114) || (exit.mapId == 123 && exit.vanillaDestMap == 114) || exit.vanillaDestMap == 41 || exit.vanillaDestMap == 43 || (exit.mapId == 84 && ((exit.eventId == 10 && exit.vanillaDestEntrance == 8) || (exit.eventId == 11 && exit.vanillaDestEntrance == 9)) || (exit.vanillaDestMap == 268 && exit.vanillaDestEntrance == 4))) {
-            // ignore Daila for now, it's handled explicitly in map_code.js
-            // ignore Yallam for now, it's handled explicitly in map_code.js
-            // ignore Trial Raod for now
-            // ignore Lemuria anchorage for now (conflicting with Atteka Inlet?)
-            // ignore Gaia Rock maze for now
-            // ignore Kibombo night time for now, from overworld this is probably from some logic for checking conditions and requirements?
-            // ignore post Aqua Hydra for now
-            // ignore East Indra Shore for now
-            // ignore Air's Rock fog room for now preventing going to the next room, some logic for checking conditions and requirements?
-            // ignore Overworld to Northern Reaches north exit to blocked by ice entrance for now
-        } else if ((exit.vanillaDestMap !== undefined) && (exit.vanillaDestMap != exit.destMap || exit.vanillaDestEntrance != exit.destEntrance)) {
+    newExitData.forEach((exit) => {
+        if (((exit.vanillaDestMap !== undefined) && (exit.vanillaDestMap != exit.destMap || exit.vanillaDestEntrance != exit.destEntrance)) || (exit.vanillaCondition != "0xFFFFFFFF" && (exit.vanillaCondition != exit.condition))) {
             badExits.push(exit)
         }
     })

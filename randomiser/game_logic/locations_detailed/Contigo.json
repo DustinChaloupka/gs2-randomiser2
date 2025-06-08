@@ -22,6 +22,10 @@
         "flags": [ "reunion", "ship_wings" ]
     },
 
+    "attributes": {
+        "conditions": {}
+    },
+
     "edges": {
         "external": [
             ["236:1", "2:54", "Overworld", true, "", []],
